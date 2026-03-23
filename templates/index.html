@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic Birthday | For My Brother</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="dark-theme">
+    <!-- Loading Screen -->
+    <div id="loader" class="loader-wrapper">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <p class="loader-text">Creating Magic...</p>
+        </div>
+    </div>
+
+    <!-- Interactive Elements -->
+    <div id="cursor-glow" class="cursor-glow"></div>
+    <div class="vignette"></div>
+    <div class="bg-gradient-mesh"></div>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <main class="main-content" id="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section section-padding parallax-layer" data-speed="0.2">
+            <div class="hero-content">
+                <h1 id="hero-title" class="typing-text gold-glow-text">Happy Birthday, Brother! 🎂</h1>
+                <div class="poster-wrapper tilt-element" data-tilt-type="poster">
+                    <div class="poster-container">
+                        <img src="{{ url_for('static', filename='images/birthday.jpg') }}" alt="Birthday Poster" class="birthday-poster" id="poster">
+                        <div class="glass-reflection"></div>
+                        <div class="corner-glow top-left"></div>
+                        <div class="corner-glow bottom-right"></div>
+                    </div>
+                </div>
+                <p class="subtitle fade-in-up">Forever my strength & happiness 🤍</p>
+            </div>
+        </section>
+
+        <div class="content-grid container">
+            <!-- Wish Form Section -->
+            <section class="wish-form-section section-padding parallax-layer" data-speed="0.1">
+                <div class="glass-card premium-card float-animation tilt-element" data-tilt-type="card">
+                    <div class="card-glass-shine"></div>
+                    <h2 class="gold-text glow-text">Send a Royal Wish</h2>
+                    <form id="wish-form">
+                        <div class="input-group">
+                            <input type="text" id="name" placeholder="Your Name" required autocomplete="off">
+                            <span class="focus-border"></span>
+                        </div>
+                        <div class="input-group">
+                            <textarea id="message" placeholder="Write a heartfelt message..." required></textarea>
+                            <span class="focus-border"></span>
+                        </div>
+                        <div class="emoji-selector" id="emoji-selector">
+                            <button type="button" class="emoji-btn active" data-emoji="❤️"><span class="emoji-inner">❤️</span></button>
+                            <button type="button" class="emoji-btn" data-emoji="🔥"><span class="emoji-inner">🔥</span></button>
+                            <button type="button" class="emoji-btn" data-emoji="🎂"><span class="emoji-inner">🎂</span></button>
+                            <button type="button" class="emoji-btn" data-emoji="😎"><span class="emoji-inner">😎</span></button>
+                            <button type="button" class="emoji-btn" data-emoji="🥳"><span class="emoji-inner">🥳</span></button>
+                            <button type="button" class="emoji-btn" data-emoji="😂"><span class="emoji-inner">😂</span></button>
+                        </div>
+                        <input type="hidden" id="selected-emoji" value="❤️">
+                        <button type="submit" class="submit-btn gold-gradient-btn" id="send-btn">
+                            <span class="btn-text">Send Wish 🎉</span>
+                            <div class="ripple-container"></div>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Wish Wall Section -->
+            <section class="wish-wall-section section-padding">
+                <h2 class="gold-text glow-text">Live Wish Wall</h2>
+                <div id="wish-wall" class="wish-grid">
+                    <!-- Wishes will be loaded here dynamically -->
+                    <div class="loading-wishes">
+                        <div class="mini-loader"></div>
+                        <span>Gathering wishes...</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Developer Credit Section -->
+        <footer class="dev-credit section-padding">
+            <div class="credit-content glass-card">
+                <p>Designed & Developed by <span class="gold-name">Lakshmigandhan M S</span> <span class="heart-icon pulse">❤️</span></p>
+                <p class="credit-sub">For My Brother <span class="gold-name">Srinivash Athani R E</span> 🎂🔥</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Audio Effects -->
+    <audio id="bgMusic" src="{{ url_for('static', filename='sounds/birthday.mp3') }}" loop></audio>
+    <button id="musicBtn" onclick="toggleMusic()">🔊</button>
+    <audio id="submit-sound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
