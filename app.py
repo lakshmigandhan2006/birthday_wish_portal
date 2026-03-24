@@ -4,12 +4,8 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-
-# Database path
 DB_PATH = os.path.join(os.path.dirname(__file__), 'database.db')
 
-
-# Initialize DB (IMPORTANT for Render)
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
@@ -22,35 +18,19 @@ def init_db():
     conn.commit()
     conn.close()
 
-
-# HOME PAGE
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
-# GET ALL WISHES
 @app.route('/api/wishes', methods=['GET'])
 def get_wishes():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute("SELECT id, name, message, emoji, timestamp FROM wishes ORDER BY timestamp DESC")
-    
-    wishes = []
-    for row in c.fetchall():
-        wishes.append({
-            'id': row[0],
-            'name': row[1],
-            'message': row[2],
-            'emoji': row[3],
-            'timestamp': row[4]
-        })
-    
+    wishes = [{'id': row[0], 'name': row[1], 'message': row[2], 'emoji': row[3], 'timestamp': row[4]} for row in c.fetchall()]
     conn.close()
     return jsonify(wishes)
 
-
-# DELETE WISH
 @app.route('/api/wishes/<int:wish_id>', methods=['DELETE'])
 def delete_wish(wish_id):
     conn = sqlite3.connect(DB_PATH)
@@ -60,34 +40,22 @@ def delete_wish(wish_id):
     conn.close()
     return jsonify({'status': 'success'})
 
-
-# ADD WISH
 @app.route('/api/wishes', methods=['POST'])
 def add_wish():
     data = request.json
-
     name = data.get('name')
     message = data.get('message')
     emoji = data.get('emoji', '')
-
+    
     if not name or not message:
         return jsonify({'error': 'Name and message are required'}), 400
-
+    
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
-    c.execute(
-        "INSERT INTO wishes (name, message, emoji) VALUES (?, ?, ?)",
-        (name, message, emoji)
-    )
+    c.execute("INSERT INTO wishes (name, message, emoji) VALUES (?, ?, ?)", (name, message, emoji))
     conn.commit()
     conn.close()
-
     return jsonify({'status': 'success'})
 
-
-# ✅ IMPORTANT: Always initialize DB (Render fix)
+# ✅ THIS IS IMPORTANT
 init_db()
-
-@app.route('/')
-def index():
-    return "WORKING DA 🔥"
