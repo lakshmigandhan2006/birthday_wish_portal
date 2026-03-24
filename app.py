@@ -87,3 +87,7 @@ def add_wish():
 
 # ✅ IMPORTANT: Always initialize DB (Render fix)
 init_db()
+
+@app.route('/')
+def index():
+    return "WORKING DA 🔥"
